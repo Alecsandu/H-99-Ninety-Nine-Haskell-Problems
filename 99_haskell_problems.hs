@@ -81,6 +81,7 @@ flatten (List (x:xs)) = flatten x ++ flatten (List xs)
 compress :: (Eq a) => [a] -> [a]
 compress [] = []
 compress list = map head (group list)
+
 compress2 :: (Eq a) => [a] -> [a]
 compress2 list = [fst x| x <- zip (init list) (tail list), (fst x /= snd x)] ++ [last list]
 
@@ -90,12 +91,14 @@ compress2 list = [fst x| x <- zip (init list) (tail list), (fst x /= snd x)] ++ 
 -- If a list contains repeated elements they should be placed in separate sublists.
 pack :: (Eq a) => [a] -> [[a]]
 pack list = group list
+
 pack2 :: (Eq a) => [a] -> [[a]]
 pack2 [] = []
 pack2 [x] = [[x]]
 pack2 (h:t) = if h `elem` (head (pack2 t)) 
               then (h:(head  (pack2 t))) : (tail (pack2 t))
               else [h] : (pack2 t)
+
 pack3 :: (Eq a) => [a] -> [[a]]
 pack3 [] = []
 -- We split elements of a list recursively into those which are equal to the first one,
